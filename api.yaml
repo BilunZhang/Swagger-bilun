@@ -18,6 +18,8 @@ tags:
   description: All conversations routes
 - name: announcements
   description: All announcements routes
+- name: wildfire-incident-reports
+  description: All wildfire incident reports routes
 
 paths:
   /users:
