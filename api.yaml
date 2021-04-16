@@ -557,7 +557,59 @@ paths:
       security:
          - cookieAuth: []
 
-
+# -------------------bilun iteration 4-----------------
+/wildfire-incident-reports:
+    get:
+      tags:
+      - wildfire-incident-reports
+      summary: Returns a list of wildfire incident reports
+      parameters:
+        - $ref: '#/components/parameters/searchParam'
+        - $ref: '#/components/parameters/orderParam'
+        - $ref: '#/components/parameters/offsetParam'
+        - $ref: '#/components/parameters/lengthParam'
+      responses:
+        201:
+          description: Wildfire incident report history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/basicMessage'
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalSeverError'
+      security:
+        - cookieAuth: []
+    post:
+      tags:
+      - wildfire-incident-reports
+      summary: Add a new wildfire incident report to the wildfire incident report page.
+      requestBody:
+        description: The request body for writing a new wildfire incident report
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: Hello! How's your'e day?
+        required: true
+      responses:
+        201:
+          description: Wildfire incident report post successful
+        400:
+          description: Invalid or missing parameters
+        401:
+          $ref: '#/components/responses/UnauthorizedError'
+        500:
+          $ref: '#/components/responses/InternalSeverError'
+      security:
+         - cookieAuth: []
+# -----------------------------------------------------
 components:
   securitySchemes:
     cookieAuth:
