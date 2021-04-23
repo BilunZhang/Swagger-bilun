@@ -18,7 +18,7 @@ tags:
   description: All conversations routes
 - name: announcements
   description: All announcements routes
-- name: wildfire-incident-reports
+- name: incident_reports
   description: All wildfire incident reports routes
 
 paths:
@@ -558,16 +558,11 @@ paths:
          - cookieAuth: []
 
 # -------------------bilun iteration 4-----------------
-/wildfire-incident-reports:
+  /incident_reports:
     get:
       tags:
-      - wildfire-incident-reports
+      - incident_reports
       summary: Returns a list of wildfire incident reports
-      parameters:
-        - $ref: '#/components/parameters/searchParam'
-        - $ref: '#/components/parameters/orderParam'
-        - $ref: '#/components/parameters/offsetParam'
-        - $ref: '#/components/parameters/lengthParam'
       responses:
         201:
           description: Wildfire incident report history retrieved successfully
@@ -576,27 +571,28 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/basicMessage'
+                  $ref: '#/components/schemas/incidentReport'
         401:
           $ref: '#/components/responses/UnauthorizedError'
         500:
           $ref: '#/components/responses/InternalSeverError'
       security:
         - cookieAuth: []
+  
     post:
       tags:
-      - wildfire-incident-reports
+      - incident_reports
       summary: Add a new wildfire incident report to the wildfire incident report page.
       requestBody:
-        description: The request body for writing a new wildfire incident report
+        description: The request body for writing a new wild fire incident report
         content:
           application/json:
             schema:
               type: object
               properties:
-                message:
+                firename:
                   type: string
-                  example: Hello! How's your'e day?
+                  example: bush fire
         required: true
       responses:
         201:
@@ -673,6 +669,41 @@ components:
         sender:
           $ref: '#/components/schemas/user'
         recipient:
+          $ref: '#/components/schemas/user'
+    incidentReport:
+      type: object
+      properties:
+        reportId:
+          type: number
+          example: 20
+        message:
+          type: string
+          example: Hello! My name is not bob
+        firename:
+          type: string
+          example: Bush fire
+        firetype:
+          type: string
+          example: Forest fire
+        street: 
+          type: string
+          example: Benton Blvd
+        city:
+          type: string
+          example: Cary
+        state: 
+          type: string
+          example: NC
+        zip:
+          type: number
+          example: 1236
+        acres: 
+          type: number
+          example: 1236
+        percentage: 
+          type: number
+          example: 25
+        reporter:
           $ref: '#/components/schemas/user'
   parameters:
     searchParam:
